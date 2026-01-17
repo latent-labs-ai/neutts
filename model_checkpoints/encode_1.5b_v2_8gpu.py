@@ -174,7 +174,7 @@ def _extract_chunk(chunk, start_idx):
     return results
 
 
-def gpu_worker(gpu_id, samples, result_queue, path_remap='', tokenizer_path='pretrained_1.5b_v2'):
+def gpu_worker(gpu_id, samples, result_queue, path_remap='', tokenizer_path='pretrained_1.5b_v2', codec_path='neucodec_Checkpoints'):
     """GPU worker for encoding audio and tokenizing sequences with V2 template."""
     try:
         import os
@@ -195,10 +195,10 @@ def gpu_worker(gpu_id, samples, result_queue, path_remap='', tokenizer_path='pre
         if path_remap:
             print(f"[GPU {gpu_id}] Path remap: {path_remap}", flush=True)
         
-        # Load NeuCodec
+        # Load NeuCodec from local checkpoint
         try:
             from neucodec import NeuCodec
-            codec = NeuCodec.from_pretrained("neuphonic/neucodec")
+            codec = NeuCodec.from_pretrained(codec_path, local_files_only=True)
             codec = codec.eval().to(device)
             
             torch.backends.cuda.matmul.allow_tf32 = True
@@ -477,6 +477,8 @@ def main():
     parser.add_argument('output_file', type=str)
     parser.add_argument('--tokenizer_path', type=str, default='pretrained_1.5b_v2',
                         help='Path to EXTENDED 1.5B tokenizer (with V2 tokens)')
+    parser.add_argument('--codec_path', type=str, default='neucodec_Checkpoints',
+                        help='Path to local NeuCodec checkpoint')
     parser.add_argument('--num_gpus', type=int, default=8)
     parser.add_argument('--resume', action='store_true')
     parser.add_argument('--path_remap', type=str, default='',
@@ -588,7 +590,7 @@ def main():
     for gpu_id in range(args.num_gpus):
         p = mp.Process(target=gpu_worker, args=(
             gpu_id, gpu_samples[gpu_id], result_queue, 
-            args.path_remap, args.tokenizer_path
+            args.path_remap, args.tokenizer_path, args.codec_path
         ))
         p.start()
         processes.append(p)
