@@ -1,0 +1,97 @@
+# =============================================================================
+# NeuTTS / NeuTTS-Air Requirements
+# =============================================================================
+# Tested on Python 3.10, 3.11
+# CUDA 11.8+ / 12.x recommended for GPU support
+#
+# IMPORTANT: Install in order to avoid binary compatibility issues:
+#   pip install -r requirements.txt
+#
+# For GPU training on H100/A100:
+#   pip install flash-attn --no-build-isolation
+#   pip install deepspeed
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Core ML Framework
+# -----------------------------------------------------------------------------
+torch>=2.1.0,<3.0.0
+torchaudio>=2.1.0
+
+# -----------------------------------------------------------------------------
+# CRITICAL: NumPy < 2.0 to avoid binary compatibility issues
+# Issue: numpy 2.x breaks pandas/sklearn C extensions compiled against numpy 1.x
+# Error: "numpy.dtype size changed, may indicate binary incompatibility"
+# -----------------------------------------------------------------------------
+numpy>=1.24.0,<2.0.0
+
+# -----------------------------------------------------------------------------
+# Transformers & HuggingFace
+# CRITICAL: >=4.40.0 required for HubertModel lazy loading fix
+# Issue: Earlier versions fail with "ModuleNotFoundError: HubertModel"
+# -----------------------------------------------------------------------------
+transformers>=4.40.0
+datasets>=2.14.0
+huggingface_hub>=0.20.0
+accelerate>=0.25.0
+safetensors>=0.4.0
+
+# -----------------------------------------------------------------------------
+# Audio Processing
+# -----------------------------------------------------------------------------
+librosa>=0.10.0
+soundfile>=0.12.0
+neucodec>=0.0.4
+
+# -----------------------------------------------------------------------------
+# Text Processing (for phonemization - optional for V2 direct text)
+# Note: Requires espeak-ng system package: apt install espeak-ng
+# -----------------------------------------------------------------------------
+phonemizer>=3.3.0
+
+# -----------------------------------------------------------------------------
+# Scientific Computing
+# Install AFTER numpy to ensure binary compatibility
+# -----------------------------------------------------------------------------
+scipy>=1.10.0
+scikit-learn>=1.3.0
+pandas>=2.0.0
+
+# -----------------------------------------------------------------------------
+# Training Utilities
+# -----------------------------------------------------------------------------
+omegaconf>=2.3.0
+fire>=0.5.0
+loguru>=0.7.0
+tqdm>=4.65.0
+
+# -----------------------------------------------------------------------------
+# Tokenizers
+# -----------------------------------------------------------------------------
+tokenizers>=0.15.0
+sentencepiece>=0.1.99
+
+# -----------------------------------------------------------------------------
+# Optional: Perth (speaker similarity)
+# -----------------------------------------------------------------------------
+# resemble-perth>=1.0.1
+
+# -----------------------------------------------------------------------------
+# Optional: Flash Attention 2 (recommended for long sequences)
+# Install separately: pip install flash-attn --no-build-isolation
+# Requires CUDA 11.6+ and compatible GPU (Ampere, Ada, Hopper)
+# -----------------------------------------------------------------------------
+# flash-attn>=2.5.0
+
+# -----------------------------------------------------------------------------
+# Optional: DeepSpeed (for distributed training)
+# Install separately: pip install deepspeed
+# -----------------------------------------------------------------------------
+# deepspeed>=0.12.0
+
+# -----------------------------------------------------------------------------
+# Optional: GGUF/ONNX inference
+# -----------------------------------------------------------------------------
+# llama-cpp-python>=0.2.0
+# onnxruntime>=1.16.0
+# onnxruntime-gpu>=1.16.0  # For GPU inference
