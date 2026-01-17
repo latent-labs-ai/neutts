@@ -1,0 +1,38 @@
+{
+  "Adeline": {
+    "speaker": "Adeline",
+    "speaker_audio_path": "../voice_profiles/Adeline.wav",
+    "speaker_text": "../voice_profiles/Adeline.txt",
+    "language": "en"
+  },
+  "Austin": {
+    "speaker": "Austin",
+    "speaker_audio_path": "../voice_profiles/Austin.wav",
+    "speaker_text": "../voice_profiles/Austin.txt",
+    "language": "en"
+  },
+  "Eve": {
+    "speaker": "Eve",
+    "speaker_audio_path": "../voice_profiles/Eve.wav",
+    "speaker_text": "../voice_profiles/Eve.txt",
+    "language": "en"
+  },
+  "Ivy": {
+    "speaker": "Ivy",
+    "speaker_audio_path": "../voice_profiles/Ivy.wav",
+    "speaker_text": "../voice_profiles/Ivy.txt",
+    "language": "ar"
+  },
+  "Fares": {
+    "speaker": "Fares",
+    "speaker_audio_path": "../voice_profiles/Fares.wav",
+    "speaker_text": "../voice_profiles/Fares.txt",
+    "language": "ar"
+  },
+  "Brian": {
+    "speaker": "Brian",
+    "speaker_audio_path": "../voice_profiles/Brian.wav",
+    "speaker_text": "../voice_profiles/Brian.txt",
+    "language": "ar"
+  }
+}
