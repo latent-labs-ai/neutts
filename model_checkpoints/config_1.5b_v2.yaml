@@ -18,14 +18,14 @@ tokenizer_path: "pretrained_1.5b_v2"       # Extended tokenizer with V2 + parali
 # =============================================================================
 # DATA
 # =============================================================================
-data_path: "training_encoded_v2.json"      # Pre-encoded data with codes + ref_codes
+data_path: "../../tts/neutts-air/dataset/encoded/training_v7_encoded.json"      # Pre-encoded data with codes + ref_codes
 max_seq_len: 8192                          # Max sequence length (ref + target)
 max_samples: null                          # null = use all samples, or set integer for debugging
 
 # =============================================================================
 # OUTPUT
 # =============================================================================
-save_root: "./outputs"                     # Base directory for checkpoints
+save_root: "expmt_v1_ft"                     # Base directory for checkpoints
 run_name: "neutts-1.5b-v2-zeroshot"       # Experiment name
 
 # =============================================================================
@@ -52,13 +52,13 @@ gradient_accumulation_steps: 4
 # Steps calculation:
 #   total_steps = (num_samples / effective_batch_size) * num_epochs
 #   For 165K samples, effective_batch=64, 1 epoch = ~2578 steps
-num_epochs: 3                              # ~7734 total steps
+num_epochs: 7                              # ~7734 total steps
 max_steps: -1                              # -1 = use num_epochs, or set specific step count
 
 # =============================================================================
 # CHECKPOINTING
 # =============================================================================
-save_steps: 500                            # Save every N steps
+save_steps: 1500                            # Save every N steps
 save_total_limit: 5                        # Keep last N checkpoints
 resume_from_checkpoint: null               # Path to resume from, or null
 
