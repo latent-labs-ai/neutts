@@ -16,7 +16,7 @@ tokenizer_path: "pretrained_1.5b_v2"
 # =============================================================================
 # DATA
 # =============================================================================
-data_path: "./hf_dataset"
+data_path: "./encoded_v2_1.5b.json"
 # dataset_name: "username/neutts-v2-encoded"  # Or use HF Hub
 max_seq_len: 8192
 max_samples: null
