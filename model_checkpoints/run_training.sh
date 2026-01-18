@@ -22,11 +22,27 @@
 
 set -e
 
+# =============================================================================
+# Install dependencies (with proxy passed from host)
+# =============================================================================
+echo "Installing dependencies on $(hostname)..."
+
+# Use --ignore-installed to avoid f2py symlink errors in shared .local
+pip install --ignore-installed 'numpy<2.0' --quiet 2>/dev/null || true
+pip install transformers datasets accelerate omegaconf fire loguru --quiet 2>/dev/null || true
+
 # Change to working directory
 cd /scratch/vikram.solanki/workspace/vs/neutts/model_checkpoints
 
-# Get node rank from SLURM (0, 1, 2, 3, ...)
-NODE_RANK=${SLURM_NODEID:-0}
+# Determine node rank from hostname (more reliable than SLURM_NODEID in enroot)
+HOSTNAME=$(hostname)
+case $HOSTNAME in
+    dgx-41) NODE_RANK=0 ;;
+    dgx-42) NODE_RANK=1 ;;
+    dgx-43) NODE_RANK=2 ;;
+    dgx-44) NODE_RANK=3 ;;
+    *) NODE_RANK=${SLURM_NODEID:-0} ;;
+esac
 NNODES=${SLURM_NNODES:-1}
 GPUS_PER_NODE=${SLURM_GPUS_ON_NODE:-8}
 MASTER_ADDR=${SLURM_LAUNCH_NODE_IPADDR:-localhost}
