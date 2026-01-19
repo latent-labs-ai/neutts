@@ -18,7 +18,7 @@ tokenizer_path: "pretrained_1.5b_v2"
 # =============================================================================
 data_path: "/scratch/vikram.solanki/workspace/vs/tts/neutts-air/dataset/encoded/training_v7_encoded.json"
 # dataset_name: "username/neutts-v2-encoded"  # Or use HF Hub
-max_seq_len: 8192
+max_seq_len: 2048
 max_samples: null
 
 # =============================================================================
@@ -28,17 +28,17 @@ save_root: "./outputs"
 run_name: "neutts-1.5b-v2-32gpu"
 
 # =============================================================================
-# TRAINING - Optimized for 32 GPUs
+# TRAINING - Optimized for 8 GPUs (single node)
 # =============================================================================
-# Effective batch size = 32 GPUs * 4 per_device * 2 grad_accum = 256
-lr: 1e-5                                   # Lower LR for large batch
+# Effective batch size = 8 GPUs * 1 per_device * 8 grad_accum = 64
+lr: 1e-5
 lr_scheduler_type: "cosine"
 warmup_ratio: 0.03
 weight_decay: 0.01
 max_grad_norm: 1.0
 
-per_device_train_batch_size: 4             # H100 80GB can handle more
-gradient_accumulation_steps: 2             # Effective batch = 256
+per_device_train_batch_size: 1             # Reduced for OOM
+gradient_accumulation_steps: 8             # Effective batch = 64
 
 # For 1.8M samples, batch=256: ~7031 steps per epoch
 num_epochs: 3
